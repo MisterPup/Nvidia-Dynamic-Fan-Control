@@ -62,6 +62,7 @@ then the computer is restarted.
 ensure that when finished, the box in nvidia-settings for the manual fan control is unticked!!!!!
 """
 
+#TODO
 #validazione curva prima di applicare!
 #pulsanti grigi e attivati quando fai modifica
 #print più figo?

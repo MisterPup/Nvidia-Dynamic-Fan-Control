@@ -177,7 +177,8 @@ class NvidiaFanController(StoppableThread):
 
 
 if __name__ == "__main__":
-
+	print "Please launch nvidia-gui.py"
+	"""
 	curve_point_array = [[10, 30],[20, 35],[40, 45],[50, 55],[60, 60],[66, 70],[70, 99],[100, 100]]
 
 	x_temp = list()
@@ -193,23 +194,4 @@ if __name__ == "__main__":
 	nvidiaController.start()
 
 	signal.pause() #don't let the main thread terminate before the nvidia thread (otherwise the latter won't receive any signal)
-
-	#---------------------------
 	"""
-	new_curve_point_array = [[10, 40],[20, 45],[40, 50],[50, 60],[60, 70],[66, 80],[70, 90],[100, 100]]
-
-	new_x_temp = list()
-	for index in range(0, len(new_curve_point_array)):
-		new_x_temp.append(new_curve_point_array[index][0])
-
-	new_y_speed = list()
-	for index in range(0, len(new_curve_point_array)):
-		new_y_speed.append(new_curve_point_array[index][1])	
-
-
-	time.sleep(2.0)
-	#nvidiaController.setCurve(new_curve_point_array)
-	nvidiaController.setCurve(new_x_temp, new_y_speed)
-	"""
-	#---------------------------
-	
