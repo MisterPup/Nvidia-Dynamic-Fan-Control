@@ -127,12 +127,12 @@ class NvidiaFanController(StoppableThread):
 			self.curve_lock.acquire()
 
 			#print "Custom Fan Speed pid ", os.getpid()
-			for index in range(0, len(self.curve.cpa)):
-				print self.curve.cpa[index]
+			#for index in range(0, len(self.curve.cpa)):
+			#	print self.curve.cpa[index]
 			
 			current_temp = self.getTemp()
 			new_fan_speed = self.curve.evaluate(current_temp)
-			#clearScreen()
+			#os.system("clear")
 			print("CurrTemp: {0} FanSpeed: {1}".format(current_temp,new_fan_speed))
 			self.setFanSpeed(new_fan_speed)
 

@@ -63,10 +63,6 @@ ensure that when finished, the box in nvidia-settings for the manual fan control
 """
 
 #TODO
-#validazione curva prima di applicare!
-#pulsanti grigi e attivati quando fai modifica
-#print più figo?
-#gpl3
 #dipendenze da librerie
 
 class Data(object):
@@ -99,16 +95,33 @@ class DataController(object):
 
 	#Check temp and speed monotonic and greater than zero, check speed inside [30, 100], temp inside [0,120] ecc ecc
 	def validate(self, xdata, ydata):
-		xdata, ydata = self.getData()
-		"""for index in range(1, len(xdata)):
-			if xdata[index] < xdata[index - 1]:
-				print "errore su punto", index
-				return False"""
+		first = [0,30]
+		last = [110,100]
+
+		if xdata[0] != first[0]:
+			print "ERROR: First point temperature must be ", first[0]
+			return False
+		if ydata[0] < first[1]:
+			print "ERROR: First point speed lower than ", first[1]
+			return False
+
+		if xdata[len(xdata) - 1] < last[0]:
+			print "ERROR: Last point temperature must be ", last[0]
+			return False
+		if ydata[len(ydata) - 1] != last[1]:
+			print "ERROR: Last point speed must be ", last[1]
+			return False
+
+		for index in range(1, len(xdata)):
+			if xdata[index] <= xdata[index - 1] or ydata[index] <= ydata[index - 1]:
+				print "ERROR: Curve not increasing!"
+				return False
 
 		return True
 
 class Chart(object):
 	def __init__(self, plt):
+		self.DEBUG = False
 		self.plot = plt
 		self.fig = plt.figure(num="Nvidia Fan Speed Controller") #create a figure (one figure per window)		
 		axes = self.fig.add_subplot(111) #add a subplot to the figure. axes is of type Axes which contains most of the figure elements
@@ -118,8 +131,13 @@ class Chart(object):
 		axes.set_ylabel("Fan Speed")
 		axes.grid()
 
-		axes.set_xlim(0, 105)
-		axes.set_ylim(25, 105)
+		self.x_min = -5
+		self.x_max = 115
+		self.y_min = 25
+		self.y_max = 105
+
+		axes.set_xlim(self.x_min, self.x_max)
+		axes.set_ylim(self.y_min, self.y_max)
 
 		printAxes = self.fig.add_axes([0.7, 0.025, 0.1, 0.04])  #position rect [left, bottom, width, height] where all quantities are in fractions of figure width and height 
 		self.printButton = Button(printAxes, "Print")	
@@ -130,8 +148,8 @@ class Chart(object):
 		self.applyAxes.on_clicked(self.applyData)
 		
 		#better to move outside the object
-		x_values = [10, 20, 40, 50, 60, 66, 70, 100] #temp
-		y_values = [30, 35, 45, 55, 60, 70, 90, 100] #speed
+		x_values = [0,  10, 20, 40, 50, 60, 65, 70, 80, 100, 110] #temp
+		y_values = [30,  35, 40, 45, 55, 60, 70, 75, 85, 95, 100] #speed
 
 		#b=blue, o=circle, picker=max distance for considering point as clicked
 		self.line, = axes.plot(x_values, y_values, linestyle='-', marker='o', color='b', picker=5) #tuple unpacking: this function returns a tuple, with the comma we take the first element
@@ -139,8 +157,10 @@ class Chart(object):
 		self.dragHandler = DragHandler(self)
 		self.dataController = DataController(x_values, y_values)
 		#self.fileController load data from file
-		self.nvidiaController = nvfanspeed.NvidiaFanController(x_values, y_values)
-		self.nvidiaController.start()
+		#validate points from file!		
+		if not self.DEBUG:
+			self.nvidiaController = nvfanspeed.NvidiaFanController(x_values, y_values)
+			self.nvidiaController.start()
 
 		signal.signal(signal.SIGINT, self.exit_signal_handler) #CTRL-C 
 		signal.signal(signal.SIGQUIT, self.exit_signal_handler) #CTRL-\
@@ -150,14 +170,16 @@ class Chart(object):
 		self.fig.canvas.mpl_connect("close_event", self.on_close)
 
 	def on_close(self, event):
-		self.nvidiaController.stop()
+		if not self.DEBUG:
+			self.nvidiaController.stop()
 
 	def exit_signal_handler(self, signal, frame):
 		self.close()
 
 	def close(self):
 		self.plot.close('all')
-		self.nvidiaController.stop()
+		if not self.DEBUG:
+			self.nvidiaController.stop()
 
 	def show(self):
 		self.plot.show() #display ALL non closed figures
@@ -175,8 +197,9 @@ class Chart(object):
 		ydata = self.line.get_ydata()
 		ret = self.dataController.setData(xdata, ydata)
 		
-		if ret:			
-			self.nvidiaController.setCurve(xdata, ydata)			
+		if ret:
+			if not self.DEBUG:
+				self.nvidiaController.setCurve(xdata, ydata)			
 		else:
 			xdata, ydata = self.dataController.getData()
 			xydata = [xdata, ydata]
@@ -192,8 +215,16 @@ class DragHandler(object):
 	def on_pick_event(self, event):
 		self.dragged = event.artist #Line2D
 		self.pick_pos = (event.mouseevent.xdata, event.mouseevent.ydata)
-		self.ind = event.ind 
-		print "self.ind: ", self.ind
+		self.ind = event.ind
+
+		if self.ind[0] == 0:
+			print "ERROR: cannot modify first point"
+			self.dragged = None
+		elif self.ind[0] == len(self.dragged.get_xdata()) - 1:
+			print "ERROR: cannot modify last point"
+			self.dragged = None
+
+		#print "self.ind: ", self.ind
 		#xdata = self.dragged.get_xdata()
 		#ydata = self.dragged.get_ydata()
 		#print 'onpick points:', xdata[self.ind], ydata[self.ind]
@@ -203,6 +234,11 @@ class DragHandler(object):
 			xdata = self.dragged.get_xdata() #no need to copy the list, since it is used only by the line2D object
 			ydata = self.dragged.get_ydata()
 			index = self.ind #if two or more points are too closed, this tuple contains more than one point. we take the first
+			chartObj = self.chartObj
+			if event.xdata <= chartObj.x_min or event.xdata >= chartObj.x_max or event.ydata <= chartObj.y_min or event.ydata >= chartObj.y_max:
+				print "ERROR: cannot move point [",index[0],"] out of chart"
+				return
+
 			xdata[index[0]] = int(xdata[index[0]] + event.xdata - self.pick_pos[0]) #truncate towards zero
 			ydata[index[0]] = int(ydata[index[0]] + event.ydata - self.pick_pos[1])
 			#print 'new point:', xdata[index], ydata[index]
