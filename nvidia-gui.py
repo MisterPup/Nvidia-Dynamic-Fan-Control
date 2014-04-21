@@ -33,38 +33,6 @@ import math
 import signal
 import nvidiafanspeed as nvfanspeed
 
-"""
-SETUP:
-In order to get this program to work, my xorg.conf was generated
-and saved using the x server display configuration tab in nvidia-settings.
-These lines:
-
-	Section "Device"
-		Identifier     "Device0"
-		Driver         "nvidia"
-		VendorName     "NVIDIA Corporation"
-		BoardName      "GeForce GTX 570"
-	EndSection
-
-in /etc/X11/xorg.conf
-were then edited to look like this:
-
-	Section "Device"
-		Identifier     "Device0"
-		Driver         "nvidia"
-		VendorName     "NVIDIA Corporation"
-		BoardName      "GeForce GTX 570"
-		Option "Coolbits" "4"
-	EndSection
-
-then the computer is restarted.
-
-ensure that when finished, the box in nvidia-settings for the manual fan control is unticked!!!!!
-"""
-
-#TODO
-#dipendenze da librerie
-
 class Data(object):
 	def __init__(self, xdata, ydata):
 		self.xdata = list(xdata)

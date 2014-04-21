@@ -1,6 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Enhanced version of the script made by Luke Frisken. It adds a frontend to the script,
+with a drag and drop chart. The drag and drop code is a modified version of the
+Drag n Drop Text Example from SciPy
+Copyright (C) 2014  Claudio Pupparo
+
+Script to control the fan speed of an NVidia gpu using a custom fan speed/temperature curve.
+Copyright (C) 2012  Luke Frisken
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses.
+"""
+
 from subprocess import *
 import time
 import os
@@ -9,14 +32,14 @@ import signal
 import threading
 
 """
-recommended_curve_point_array = [[10, 30],
-								 [20, 35],
-								 [40, 45],
-								 [50, 55],
-								 [60, 60],
-								 [66, 70],
-								 [70, 90],
-								 [100, 100]]
+example_curve_point_array = [[10, 30],
+							 [20, 35],
+							 [40, 45],
+							 [50, 55],
+							 [60, 60],
+							 [66, 70],
+							 [70, 90],
+							 [100, 100]]
 
 --------------------
 
