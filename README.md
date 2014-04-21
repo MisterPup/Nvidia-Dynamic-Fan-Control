@@ -28,3 +28,4 @@ Modify xorg.conf
     add line
       Option         "Coolbits" "12"
     to section "Device" in file /etc/X11/xorg.conf
+    
