@@ -188,7 +188,7 @@ class NvidiaFanController(StoppableThread):
 
 	def setCurve(self, *args, **kwargs):
 		self.curve_lock.acquire()
-		print "Change Fan Speed"
+		print "Fan Speed Curve updated"
 
 		if len(args) == 1:
 			self.curve.setCurve(args[0])
