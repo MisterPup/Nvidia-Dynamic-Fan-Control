@@ -16,16 +16,22 @@ DEPENDENCIES:
   matplotlib
 
 HOW TO INSTALL
-Install matplotlib
-  On Debian based distros:
+- Install matplotlib
+  - On Debian based distros:
+    ```
     sudo apt-get install python-matplotlib
-Modify xorg.conf
-  Before driver 337.12 Beta
-    add line
-      Option         "Coolbits" "4"
-    to section "Device" in file /etc/X11/xorg.conf
-  After driver 337.12 Beta
-    add line
-      Option         "Coolbits" "12"
-    to section "Device" in file /etc/X11/xorg.conf
+    ```
+- Modify xorg.conf
+    Before driver 337.12 Beta
+      add line
+      ```
+        Option         "Coolbits" "4"
+      ```
+      to section "Device" in file /etc/X11/xorg.conf
+    After driver 337.12 Beta
+      add line
+      ```
+        Option         "Coolbits" "12"
+      ```
+      to section "Device" in file /etc/X11/xorg.conf
     
