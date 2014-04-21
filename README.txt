@@ -5,7 +5,7 @@ Python script for dynamic control of the fan speed of a Nvidia Card
 Based on the work of Luke Frisken:
 https://code.google.com/p/nvidia-fanspeed/
 
-Fan speed changes depending on the temperature of the card.
+Fan speed changes depending on the temperature of the card
 A modifiable 2D curve of [temp, speed] points is used to control the fan
 
 Works only with proprietary drivers
