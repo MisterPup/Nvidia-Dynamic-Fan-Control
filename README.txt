@@ -12,7 +12,7 @@ Works only with proprietary drivers
 No SLI support (only single GPU configuration)
 It must be used with an open terminal
 
-Tested on 331.20 and 337.12 Beta
+Tested on version 331.20 and 337.12 Beta of the driver
 
 DEPENDENCIES
   matplotlib
