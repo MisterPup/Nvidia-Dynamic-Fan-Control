@@ -21,7 +21,7 @@ DEPENDENCIES
 HOW TO INSTALL
 Install python
   On Debian based distros:
-  sudo apt-get install python
+    sudo apt-get install python
 Install matplotlib
   On Debian based distros:
     sudo apt-get install python-matplotlib
