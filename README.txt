@@ -26,3 +26,7 @@ Modify xorg.conf
     Option         "Coolbits" "4"
   to section "Device" in file /etc/X11/xorg.conf
   
+HOW TO START
+Open a terminal in the folder containing both nvidia-gui.py and nvidiafanspeed.py then:
+  python nvidia-gui.py
+  
