@@ -15,9 +15,13 @@ It must be used with an open terminal
 Tested on version 331.20 and 337.12 Beta of the driver
 
 DEPENDENCIES
+  python
   matplotlib
 
 HOW TO INSTALL
+Install python
+  On Debian based distros:
+  sudo apt-get install python
 Install matplotlib
   On Debian based distros:
     sudo apt-get install python-matplotlib
