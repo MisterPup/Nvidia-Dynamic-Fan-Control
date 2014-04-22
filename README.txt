@@ -27,6 +27,6 @@ Modify xorg.conf
   to section "Device" in file /etc/X11/xorg.conf
   
 HOW TO START
-Open a terminal in the folder containing both nvidia-gui.py and nvidiafanspeed.py then:
+Open a terminal in the folder containing both nvidia-gui.py and nvidiafanspeed.py then execute:
   python nvidia-gui.py
   
