@@ -24,10 +24,8 @@ HOW TO INSTALL
   &nbsp;&nbsp;sudo apt-get install python #on debian based distros
 * Install matplotlib  
   &nbsp;&nbsp;sudo apt-get install python-matplotlib #on debian based distros
-* Modify xorg.conf  
-  add line  
-  &nbsp;&nbsp;Option         "Coolbits" "4"  
-  to section "Device" in file /etc/X11/xorg.conf  
+* Add the following line in section "Device" of /etc/X11/xorg.conf  
+  &nbsp;&nbsp;Option         "Coolbits" "4"
   
 HOW TO START  
 Open a terminal in the folder containing both nvidia-gui.py and nvidiafanspeed.py then execute:  
