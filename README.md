@@ -29,5 +29,5 @@ HOW TO INSTALL
   
 HOW TO START  
 Open a terminal in the folder containing both nvidia-gui.py and nvidiafanspeed.py then execute:  
-  python nvidia-gui.py
+&nbsp;&nbsp;python nvidia-gui.py
   
