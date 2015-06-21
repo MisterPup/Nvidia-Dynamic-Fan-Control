@@ -12,7 +12,8 @@ Works only with proprietary drivers
 No SLI support (only single GPU configuration)
 It must be used with an open terminal
 
-Tested on version 331.20 and 337.12 Beta of the driver
+Last driver version tested: 352.21
+On versions 349.12 and 349.16 there is a regression that makes impossibile to control fan speed
 
 DEPENDENCIES
   python
